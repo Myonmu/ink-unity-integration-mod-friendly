@@ -16,7 +16,7 @@ namespace Ink.UnityIntegration {
 		public bool isMarkedToCompileAsMasterFile => InkSettings.instance.includeFilesToCompileAsMasterFiles.Contains(inkAsset);
 		public bool compileAutomatically => InkSettings.instance.filesToCompileAutomatically.Contains(inkAsset);
 		// A reference to the ink file
-		public DefaultAsset inkAsset;
+		public TextAsset inkAsset;
 
         //specify json destination folder (if None, default to same folder as ink file)
         public DefaultAsset jsonAssetDirectory;
@@ -137,7 +137,7 @@ namespace Ink.UnityIntegration {
 		/// <value>The last edit date of the file.</value>
 		public DateTime lastEditDate => File.GetLastWriteTime(absoluteFilePath);
 
-		public List<DefaultAsset> masterInkAssets = new List<DefaultAsset>();
+		public List<TextAsset> masterInkAssets = new List<TextAsset>();
 		public IEnumerable<InkFile> masterInkFiles {
 			get {
 				foreach(var masterInkAsset in masterInkAssets) {
@@ -163,7 +163,7 @@ namespace Ink.UnityIntegration {
 		// We cache the paths of the files to be included for performance, giving us more freedom to refresh the actual includes list without needing to parse all the text.
 		public List<string> localIncludePaths = new List<string>();
 		// The asset references for the included files. Unlike localIncludePaths this contains include files
-		public List<DefaultAsset> includes = new List<DefaultAsset>();
+		public List<TextAsset> includes = new List<TextAsset>();
 		// The InkFiles of the includes of this file
 		public List<InkFile> includesInkFiles {
 			get {
@@ -183,7 +183,7 @@ namespace Ink.UnityIntegration {
 
 
 
-		public InkFile (DefaultAsset inkAsset) {
+		public InkFile (TextAsset inkAsset) {
 			Debug.Assert(inkAsset != null);
 			this.inkAsset = inkAsset;
 			

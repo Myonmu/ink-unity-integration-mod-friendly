@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -111,7 +111,7 @@ namespace Ink.UnityIntegration {
 	    static void OnDrawProjectWindowItem(string guid, Rect rect) {
 	        string path = AssetDatabase.GUIDToAssetPath(guid);
 			if (InkEditorUtils.IsInkFile(path)) {
-				DefaultAsset asset = AssetDatabase.LoadAssetAtPath<DefaultAsset>(path);
+				TextAsset asset = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
 				DrawInkFile(InkLibrary.GetInkFileWithFile(asset), rect);
 			}
 	    }

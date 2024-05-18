@@ -87,7 +87,7 @@ namespace Ink.UnityIntegration {
         }
 
 		public List<InkFile> inkLibrary = new List<InkFile>();
-		Dictionary<DefaultAsset, InkFile> inkLibraryDictionary = new Dictionary<DefaultAsset, InkFile>();
+		Dictionary<TextAsset, InkFile> inkLibraryDictionary = new Dictionary<TextAsset, InkFile>();
 		
         public int Count {
             get {
@@ -224,11 +224,11 @@ namespace Ink.UnityIntegration {
                 if(inkFile == null) {
 					inkLibraryChanged = true;
 					string localAssetPath = InkEditorUtils.AbsoluteToUnityRelativePath(inkFilePaths [i]);
-					DefaultAsset inkFileAsset = AssetDatabase.LoadAssetAtPath<DefaultAsset>(localAssetPath);
+					TextAsset inkFileAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(localAssetPath);
 					// If the ink file can't be found, it might not yet have been imported. We try to manually import it to fix this.
 					if(inkFileAsset == null) {
 						AssetDatabase.ImportAsset(localAssetPath);
-						inkFileAsset = AssetDatabase.LoadAssetAtPath<DefaultAsset>(localAssetPath);
+						inkFileAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(localAssetPath);
 						if(inkFileAsset == null) {
                             // If this occurs as a result assets not having been imported before OnValidate => Validate we should return immediately and set a flag to true.
                             // If an asset import is detected immediately after this via InkPostProcessor, then this rebuild may (will?) have been unnecessary anyway.
@@ -263,7 +263,7 @@ namespace Ink.UnityIntegration {
 		// To be used when adding .ink files. 
 		// This process is typically handled by CreateOrReadUpdatedInkFiles, called from InkPostProcessor; but it may be desired to remove/disable the post processor.
 		// In those cases, this is the correct way to ensure the ink library correctly processes the file.
-		public static InkFile AddNewInkFile (DefaultAsset asset) {
+		public static InkFile AddNewInkFile (TextAsset asset) {
 			Debug.Assert(asset != null);
 			// First, check if we've already got it in the library!
 			foreach(var _inkFile in instance)
@@ -283,7 +283,7 @@ namespace Ink.UnityIntegration {
                 string importedAssetPath = importedInkAssets[i];
                 InkFile inkFile = GetInkFileWithPath(importedAssetPath);
 				if(inkFile == null) {
-					DefaultAsset asset = AssetDatabase.LoadAssetAtPath<DefaultAsset>(importedAssetPath);
+					TextAsset asset = AssetDatabase.LoadAssetAtPath<TextAsset>(importedAssetPath);
 					if(asset == null) {
 						// This file wasn't found! This is a rare bug. We remove the file from the list in this case, preventing it from causing further bugs.
 						importedInkAssets.RemoveAt(i);
@@ -352,7 +352,7 @@ namespace Ink.UnityIntegration {
 		/// <returns>The ink file with path.</returns>
 		/// <param name="file">File asset.</param>
 		/// <param name="addIfMissing">Adds the file if missing from inkLibrary.</param>
-		public static InkFile GetInkFileWithFile (DefaultAsset file, bool addIfMissing = false) {
+		public static InkFile GetInkFileWithFile (TextAsset file, bool addIfMissing = false) {
 			if(instance.inkLibrary == null) return null;
 			
 			if (!file) {
@@ -476,7 +476,7 @@ namespace Ink.UnityIntegration {
 						// This enables parsing ..\ and the like. Can we use Path.GetFullPath instead?
 						var fullIncludePath = new FileInfo(localIncludePath).FullName;
 						localIncludePath = InkEditorUtils.AbsoluteToUnityRelativePath(fullIncludePath);
-						DefaultAsset includedInkFileAsset = AssetDatabase.LoadAssetAtPath<DefaultAsset>(localIncludePath);
+						TextAsset includedInkFileAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(localIncludePath);
 						if(includedInkFileAsset != null) {
 							return GetInkFileWithFile(includedInkFileAsset);
 						}

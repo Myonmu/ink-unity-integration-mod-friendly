@@ -73,8 +73,8 @@ namespace Ink.UnityIntegration {
         public DefaultAsset defaultJsonAssetPath;
 		[UnityEngine.Serialization.FormerlySerializedAs("compileAutomatically")]
         public bool compileAllFilesAutomatically = true;
-        public List<DefaultAsset> includeFilesToCompileAsMasterFiles = new List<DefaultAsset>();
-        public List<DefaultAsset> filesToCompileAutomatically = new List<DefaultAsset>();
+        public List<TextAsset> includeFilesToCompileAsMasterFiles = new List<TextAsset>();
+        public List<TextAsset> filesToCompileAutomatically = new List<TextAsset>();
 		public bool delayInPlayMode = true;
 		public bool handleJSONFilesAutomatically = true;
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Reflection;
 
 namespace Ink.UnityIntegration {
-	[CustomEditor(typeof(DefaultAsset), true)]
+	[CustomEditor(typeof(TextAsset), true)]
 	public class DefaultAssetEditor : Editor {
 
 		private DefaultAssetInspector inspector;

@@ -99,13 +99,13 @@ namespace Ink.UnityIntegration {
 		}
 
 		void CreateIncludeList () {
-			List<DefaultAsset> includeTextAssets = inkFile.includes;
+			List<TextAsset> includeTextAssets = inkFile.includes;
 			includesFileList = new ReorderableList(includeTextAssets, typeof(DefaultAsset), false, true, false, false);
 			includesFileList.drawHeaderCallback = (Rect rect) => {  
 				EditorGUI.LabelField(rect, "Included Files");
 			};
 			includesFileList.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) => {
-				DefaultAsset childAssetFile = ((List<DefaultAsset>)includesFileList.list)[index];
+				TextAsset childAssetFile = ((List<TextAsset>)includesFileList.list)[index];
 				if(childAssetFile == null) {
 					Debug.LogError("Ink file in include list is null. This should never occur. Use Assets > Recompile Ink to fix this issue.");
 					EditorGUI.LabelField(rect, new GUIContent("Warning: Ink File in include list is null. Use Assets > Recompile Ink to fix this issue."));
@@ -138,13 +138,13 @@ namespace Ink.UnityIntegration {
 		}
 		
 		void CreateMastersList () {
-			List<DefaultAsset> mastersTextAssets = inkFile.masterInkAssets;
+			List<TextAsset> mastersTextAssets = inkFile.masterInkAssets;
 			mastersFileList = new ReorderableList(mastersTextAssets, typeof(DefaultAsset), false, true, false, false);
 			mastersFileList.drawHeaderCallback = (Rect rect) => {  
 				EditorGUI.LabelField(rect, "Master Files");
 			};
 			mastersFileList.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) => {
-				DefaultAsset masterAssetFile = ((List<DefaultAsset>)mastersFileList.list)[index];
+				TextAsset masterAssetFile = ((List<TextAsset>)mastersFileList.list)[index];
 				if(masterAssetFile == null) {
 					Debug.LogError("Ink file in masters list is null. This should never occur. Use Assets > Recompile Ink to fix this issue.");
 					EditorGUI.LabelField(rect, new GUIContent("Warning: Ink File in masters list is null. Use Assets > Recompile Ink to fix this issue."));

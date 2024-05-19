@@ -24,10 +24,20 @@ namespace Ink
 			CharacterRange.Define('\u0600', '\u06FF', excludes: new CharacterSet());
 		public static readonly CharacterRange Korean =
 			CharacterRange.Define('\uAC00', '\uD7AF', excludes: new CharacterSet());
-        public static readonly CharacterRange Latin1Supplement =
+	    public static readonly CharacterRange Latin1Supplement =
 			CharacterRange.Define('\u0080', '\u00FF', excludes: new CharacterSet());
-        public static readonly CharacterRange Chinese =
-			CharacterRange.Define('\u4E00', '\u9FFF', excludes: new CharacterSet());
+        /// <summary>
+        /// Subset of Unicode Hiragana block, excluding sound marks.
+        /// https://unicodeplus.com/block/3040
+        /// </summary>
+        public static readonly CharacterRange Hiragana = CharacterRange.Define('\x3041', '\x3096');
+        /// <summary>
+        /// Subset of Unicode Katakana block, excluding the last 3 characters.
+        /// https://unicodeplus.com/block/30A0
+        /// </summary>
+        public static readonly CharacterRange Katakana = CharacterRange.Define('\x30A0', '\x30FC');
+
+        public static readonly CharacterRange CJK = CharacterRange.Define('\x4E00', '\x9FFF');
 
         private void ExtendIdentifierCharacterRanges(CharacterSet identifierCharSet)
         {
@@ -58,8 +68,10 @@ namespace Ink
                 Greek,
                 Hebrew,
                 Korean,
-		Latin1Supplement,
-		Chinese,
+		        Latin1Supplement,
+                Hiragana,
+                Katakana,
+                CJK,
             };
         }
 	}

@@ -1,3 +1,10 @@
+# What is this fork?
+
+This is a light modification based on the original ink plugin that is intended to enble better modding experience. Note this may not be suitable for your mod architecture.
+
+- Supports Hiragana, Katakana, CJK unified characters as symbols (variable and list names)
+- Imported ink files are now TextAsset instead of DefaultAsset, so that you can use it for runtime compilation.
+
 # ink-Unity integration
 
 This Unity package allows you to integrate inkle's [ink narrative scripting language](http://www.inklestudios.com/ink) with Unity and provides tools to **compile**, **play** and **debug** your stories.

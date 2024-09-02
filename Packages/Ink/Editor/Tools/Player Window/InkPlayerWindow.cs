@@ -2131,7 +2131,7 @@ namespace Ink.UnityIntegration {
 				}
 				if(isExternalFunction) {
 					OnEvaluateFunction(functionParams.functionName, allInput);
-					InkPlayerWindowState.Instance.functionPanelState.functionReturnValue = externalFunction (allInput);
+					InkPlayerWindowState.Instance.functionPanelState.functionReturnValue = externalFunction (story, allInput);
 					OnCompleteEvaluateFunction(functionParams.functionName, allInput, null, InkPlayerWindowState.Instance.functionPanelState.functionReturnValue);
 				} else {
 					InkPlayerWindowState.Instance.functionPanelState.functionReturnValue = story.EvaluateFunction(functionParams.functionName, out outputContent, allInput);

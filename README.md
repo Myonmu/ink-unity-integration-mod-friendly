@@ -2,8 +2,9 @@
 
 This is a light modification based on the original ink plugin that is intended to enble better modding experience. Note this may not be suitable for your mod architecture.
 
-- Supports Hiragana, Katakana, CJK unified characters as symbols (variable and list names)
-- Imported ink files are now TextAsset instead of DefaultAsset, so that you can use it for runtime compilation.
+- ~~Supports Hiragana, Katakana, CJK unified characters as symbols (variable and list names)~~ Merged into the official ink runtime 
+- Imported ink files are now TextAsset instead of DefaultAsset, so that you can use it for runtime compilation. ([Goto Commit](https://github.com/Myonmu/ink-unity-integration-mod-friendly/commit/c2a2f518a44935d395128f026763d91e950754d5))
+- External functions takes an extra `Runtime.Story` as its first param so that it is possible to know which story called the function. ([Goto Commit](https://github.com/Myonmu/ink-unity-integration-mod-friendly/commit/111c01be86e810a5020c9f5d4960a3c3c0a58f38))
 
 # ink-Unity integration
 

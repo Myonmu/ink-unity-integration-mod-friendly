@@ -6,24 +6,6 @@ namespace Ink
 {
 	public partial class InkParser
 	{
-		protected class InfixOperator
-		{
-			public string type;
-			public int precedence;
-            public bool requireWhitespace;
-
-            public InfixOperator(string type, int precedence, bool requireWhitespace) {
-				this.type = type;
-				this.precedence = precedence;
-                this.requireWhitespace = requireWhitespace;
-			}
-
-			public override string ToString ()
-			{
-				return type;
-			}
-		}
-
         protected Parsed.Object TempDeclarationOrAssignment()
         {
             Whitespace ();
@@ -313,14 +295,24 @@ namespace Ink
             return null;
         }
 
+        /// <summary>
+        /// Successive dot access ( a.b.c )
+        /// </summary>
+        /// <returns></returns>
+        protected List<Identifier> DotAccessCall()
+        {
+            ParseRule dots = Exclude(String("."));
+            return Interleave<Identifier>(IdentifierWithMetadata, dots);
+        }
+
         protected Expression ExpressionFunctionCall()
         {
-            var iden = Parse(IdentifierWithMetadata);
-            if (iden == null)
+            var iden = Parse(DotAccessCall);
+            if (iden == null || iden.Count == 0)
                 return null;
 
             Whitespace ();
-
+            
             var arguments = Parse(ExpressionFunctionCallArguments);
             if (arguments == null) {
                 return null;
@@ -391,30 +383,6 @@ namespace Ink
 
 		}
 
-		private InfixOperator ParseInfixOperator()
-		{
-            foreach (var op in _binaryOperators) {
-
-                int ruleId = BeginRule ();
-
-                if (ParseString (op.type) != null) {
-
-                    if (op.requireWhitespace) {
-                        if (Whitespace () == null) {
-                            FailRule (ruleId);
-                            continue;
-                        }
-                    }
-
-                    return (InfixOperator) SucceedRule(ruleId, op);
-                }
-
-                FailRule (ruleId);
-            }
-
-            return null;
-		}
-
         protected Parsed.List ExpressionList ()
         {
             Whitespace ();
@@ -463,9 +431,6 @@ namespace Ink
 
 		void RegisterExpressionOperators()
 		{
-            _maxBinaryOpLength = 0;
-			_binaryOperators = new List<InfixOperator> ();
-
             // These will be tried in order, so we need "<=" before "<"
             // for correctness
 
@@ -495,18 +460,7 @@ namespace Ink
 
             RegisterBinaryOperator ("%", precedence:8);
             RegisterBinaryOperator ("mod", precedence:8, requireWhitespace:true);
-
-
 		}
-
-        void RegisterBinaryOperator(string op, int precedence, bool requireWhitespace = false)
-		{
-            _binaryOperators.Add(new InfixOperator (op, precedence, requireWhitespace));
-            _maxBinaryOpLength = Math.Max (_maxBinaryOpLength, op.Length);
-		}
-
-        List<InfixOperator> _binaryOperators;
-        int _maxBinaryOpLength;
 	}
 }
 
